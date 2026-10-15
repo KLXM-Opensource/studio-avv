@@ -1,0 +1,11 @@
+{
+    "name": "klxm/studio-avv",
+    "description": "KLXM Studio – AVV: Vereinbarung zur Auftragsverarbeitung (Art. 28 DS-GVO) Schritt für Schritt ausfüllen, elektronisch unterzeichnen und als PDF ablegen; Einladungen an Kunden, neue Fassungen zur erneuten Zeichnung",
+    "type": "klxm-studio-extension",
+    "license": "MIT",
+    "keywords": ["klxm-studio", "klxm-studio-extension", "avv", "dsgvo", "gdpr", "dpa", "auftragsverarbeitung", "pdf", "signature"],
+    "homepage": "https://studio.klxm.de",
+    "authors": [{ "name": "KLXM Crossmedia GmbH and contributors" }],
+    "require": { "php": ">=8.4.1", "dompdf/dompdf": "^3.1" },
+    "extra": { "klxm-studio": { "entry": "extension.php", "requires-core": ">=1.0.0" } }
+}

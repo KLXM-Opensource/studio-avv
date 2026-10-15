@@ -1,0 +1,43 @@
+/* Verwaltung → AVV – Reiter wie die Netzwerk-Übersicht, Farben aus den Tokens der Verwaltung (hell/dunkel) */
+.avv-tabs{position:relative;display:flex;gap:2px;margin:0 0 20px;border-bottom:1px solid var(--adm-line);overflow-x:auto;scrollbar-width:none}
+.avv-tabs a{display:inline-flex;align-items:center;gap:7px;padding:10px 14px 11px;border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--adm-t2);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+.avv-tabs a .ico{width:17px;height:17px;opacity:.8}
+.avv-tabs a:hover{color:var(--adm-ink)}
+.avv-tabs a[aria-current]{border-bottom-color:var(--adm-a);color:var(--adm-ink)}
+.avv-tabs .net-tabs__n{min-width:20px;padding:0 6px;border-radius:999px;background:var(--adm-warn-bg);color:var(--adm-warn);font-size:12px;line-height:20px;text-align:center}
+.avv-callout{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin:0 0 18px;padding:12px 16px;border-radius:12px;background:var(--adm-card);box-shadow:0 0 0 1px var(--adm-line),inset 3px 0 0 var(--adm-warn)}
+.avv-callout p{margin:0}.avv-callout form{margin:0}
+.avv-bar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:0 0 14px}
+.avv-bar .net-seg{display:inline-flex;gap:2px;padding:3px;border-radius:9px;background:var(--adm-fill)}
+.avv-bar .net-seg a{padding:6px 12px;border-radius:7px;color:var(--adm-t2);font-size:13.5px;font-weight:600;text-decoration:none}
+.avv-bar .net-seg a[aria-current]{background:var(--adm-card);color:var(--adm-ink);box-shadow:0 1px 2px rgb(0 0 0/.08)}
+.avv-n{margin-left:4px;padding:0 6px;border-radius:999px;background:var(--adm-bg);font-size:11.5px}
+.avv-search{position:relative;flex:1 1 220px;max-width:360px;margin:0}
+.avv-search .net-search__ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--adm-t3)}
+.avv-search input{width:100%;padding-left:34px}
+.avv-table-card{padding:0;overflow-x:auto}
+.avv-table td{vertical-align:middle}
+.avv-row__name{font-weight:700;color:var(--adm-ink);text-decoration:none}
+.avv-row__name:hover{text-decoration:underline}
+.avv-invite{margin-top:22px;max-width:760px}
+.avv-empty p{margin:0;color:var(--adm-t2)}
+.avv-back{margin:0 0 10px}
+.avv-back a{color:var(--adm-t2);text-decoration:none;font-weight:600}
+.avv-show{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,340px);gap:18px;align-items:start}
+.avv-status{margin:-4px 0 14px;font-weight:600;color:var(--adm-t2)}
+.avv-status--signed{color:var(--adm-ok)}.avv-status--open{color:var(--adm-warn)}
+.avv-dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;margin:0 0 10px;font-size:14px}
+.avv-dl dt{color:var(--adm-t3)}.avv-dl dd{margin:0;overflow-wrap:anywhere}
+.avv-hash{font-size:12px;overflow-wrap:anywhere}
+.avv-h3{margin:16px 0 6px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--adm-t3)}
+.avv-ul,.avv-hist{margin:0;padding-left:18px}
+.avv-actions{display:grid;gap:12px}
+.avv-actions h2{margin:0}.avv-actions form,.avv-actions p{margin:0}
+.avv-renew{display:grid;gap:6px}
+.avv-renew label{font-weight:700}
+.avv-renew textarea{width:100%}
+.avv-savebar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.avv-publish{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+.avv-publish input{min-width:240px}
+@media (max-width:900px){.avv-show{grid-template-columns:1fr}.avv-publish{margin-left:0}}
+.avv-renew textarea{font:inherit}
