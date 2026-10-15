@@ -154,6 +154,25 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
         return $this->to('/admin/avv/' . $c['id'], 'success', __('Als beendet markiert. Das PDF bleibt zur Nachweisführung erhalten.'));
     }
 
+    /**
+     * Endgültig löschen (Vertrag, Unterschrift, PDF) – nur Administration, mit Warnung; bei unterzeichneten Verträgen muss
+     * zusätzlich „Nachweis geht verloren“ bestätigt werden. Verweise neuerer Zeichnungen (replaces_id) bleiben als Zahl stehen.
+     */
+    public function delete(Request $r, string $id): Response
+    {
+        $u = $this->guard($r);
+        $c = Repo::find((int) $id) ?? throw new HttpException(404);
+        if (in_array($c['status'], ['signed', 'replaced', 'revoked'], true) && empty($r->post['confirm'])) {
+            return $this->to('/admin/avv/' . $c['id'], 'error', __('Bitte bestätigen Sie, dass der Nachweis der Unterzeichnung verloren geht.'));
+        }
+        Repo::delete((int) $c['id']);
+        try {
+            if (Avv::multi()) \Core\Network\Network::log('avv.delete', site()->key, (string) $u['email'], ($c['company'] ?: $c['email']) . ' · ' . $c['status']);
+        } catch (\Throwable) {
+        }
+        return $this->to('/admin/avv', 'success', __('Vereinbarung mit {name} gelöscht – einschließlich PDF.', ['name' => $c['company'] ?: $c['email']]));
+    }
+
     // ------------------------------------------------------------------ Vertragstext
 
     public static function templateFields(): array

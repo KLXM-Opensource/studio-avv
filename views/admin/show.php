@@ -47,6 +47,16 @@ $outdated = $c['status'] === 'signed' && $current && (int) $c['version_id'] !== 
         <button class="adm-btn<?= $outdated ? ' adm-btn--primary' : '' ?>"><?= icon('paper-plane-tilt') ?> <?= e(__('Zur Zeichnung einladen')) ?></button></form>
       <form method="post" action="<?= e(url('/admin/avv/' . $c['id'] . '/beenden')) ?>" data-confirm="<?= e(__('Vereinbarung als beendet markieren (z. B. Zusammenarbeit beendet)? Das PDF bleibt erhalten.')) ?>"><?= csrf_field() ?><button class="adm-btn adm-btn--ghost adm-btn--danger-text"><?= e(__('Als beendet markieren')) ?></button></form>
     <?php endif; ?>
+    <details class="avv-danger">
+      <summary><?= e(__('Endgültig löschen …')) ?></summary>
+      <form method="post" action="<?= e(url('/admin/avv/' . $c['id'] . '/loeschen')) ?>" data-confirm="<?= e(__('Vereinbarung mit {name} endgültig löschen? Angaben, Unterschrift und PDF werden entfernt und lassen sich nicht wiederherstellen.', ['name' => $c['company'] ?: $c['email']])) ?>" data-confirm-ok="<?= e(__('Endgültig löschen')) ?>"><?= csrf_field() ?>
+        <?php if ($c['status'] !== 'open'): ?>
+        <p class="avv-danger__warn"><?= icon('warning') ?> <?= e(__('Diese Vereinbarung ist unterzeichnet. Nach dem Löschen fehlt Ihnen der Nachweis nach Art. 28 DS-GVO – laden Sie das PDF vorher herunter, wenn Sie es aufbewahren müssen. „Als beendet markieren“ behält den Nachweis.')) ?></p>
+        <label class="f-check"><input type="checkbox" name="confirm" value="1" required> <span><?= e(__('Ich habe verstanden, dass der Nachweis der Unterzeichnung verloren geht.')) ?></span></label>
+        <?php endif; ?>
+        <button class="adm-btn adm-btn--small adm-btn--danger"><?= icon('trash') ?> <?= e(__('Endgültig löschen')) ?></button>
+      </form>
+    </details>
     <?php if ($older || $newer): ?>
     <h3 class="avv-h3"><?= e(__('Verlauf')) ?></h3>
     <ul class="avv-hist">

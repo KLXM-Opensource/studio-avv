@@ -168,4 +168,11 @@ return [
     'Schrift im PDF' => 'Font in the PDF',
     'Z. B. Ihre Hausschrift. Freie Schriften werden beim Speichern einmal geladen und auf dem Server abgelegt.' => 'E.g. your corporate font. Free fonts are downloaded once when saving and stored on the server.',
     'Die Schrift „{name}“ konnte nicht geladen werden (cdn.jsdelivr.net nicht erreichbar?). Das PDF nutzt bis dahin DejaVu Sans.' => 'The font “{name}” could not be downloaded (cdn.jsdelivr.net unreachable?). Until then the PDF uses DejaVu Sans.',
+    'Endgültig löschen …' => 'Delete permanently …',
+    'Endgültig löschen' => 'Delete permanently',
+    'Vereinbarung mit {name} endgültig löschen? Angaben, Unterschrift und PDF werden entfernt und lassen sich nicht wiederherstellen.' => 'Permanently delete the agreement with {name}? Details, signature and PDF are removed and cannot be restored.',
+    'Diese Vereinbarung ist unterzeichnet. Nach dem Löschen fehlt Ihnen der Nachweis nach Art. 28 DS-GVO – laden Sie das PDF vorher herunter, wenn Sie es aufbewahren müssen. „Als beendet markieren“ behält den Nachweis.' => 'This agreement has been signed. After deleting it you no longer have proof under Art. 28 GDPR – download the PDF first if you need to keep it. “Mark as ended” keeps the proof.',
+    'Ich habe verstanden, dass der Nachweis der Unterzeichnung verloren geht.' => 'I understand that the proof of signature will be lost.',
+    'Bitte bestätigen Sie, dass der Nachweis der Unterzeichnung verloren geht.' => 'Please confirm that the proof of signature will be lost.',
+    'Vereinbarung mit {name} gelöscht – einschließlich PDF.' => 'Agreement with {name} deleted – including the PDF.',
 ];

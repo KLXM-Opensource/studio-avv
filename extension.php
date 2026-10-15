@@ -94,6 +94,7 @@ return [
             $r->get('/admin/avv/{id}/pdf', [$c, 'pdf'], $p);
             $r->post('/admin/avv/{id}/erneut', [$c, 'resend'], $p);
             $r->post('/admin/avv/{id}/beenden', [$c, 'revoke'], $p);
+            $r->post('/admin/avv/{id}/loeschen', [$c, 'delete'], $p);
         });
 
         $x->command('avv:selftest', 'AVV: Regeln, Platzhalter, Unterschrift, Links, PDF', fn(array $args): int => Klxm\Avv\SelfTest::run());

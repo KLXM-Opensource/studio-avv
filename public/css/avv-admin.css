@@ -54,3 +54,11 @@
 .avv-ph-row dd{margin:4px 0 0;font-size:13px}
 .avv-ph-note{margin:12px 0 0!important;font-size:12.5px}
 @media (max-width:1100px){.avv-tpl-grid{grid-template-columns:1fr}.avv-ph-list{position:static;max-height:none}}
+
+/* Endgültig löschen: eingeklappt, mit Warnung */
+.avv-danger{margin-top:4px;padding-top:10px;border-top:1px solid var(--adm-line)}
+.avv-danger summary{color:var(--adm-err);font-weight:600;cursor:pointer}
+.avv-danger form{display:grid;gap:8px;margin-top:10px}
+.avv-danger__warn{display:flex;gap:8px;margin:0;padding:10px 12px;border-radius:8px;background:var(--adm-err-bg,#fdecea);color:var(--adm-ink);font-size:13px}
+.avv-danger__warn .ico{flex:none;width:16px;height:16px;margin-top:2px;color:var(--adm-err)}
+.avv-danger button{justify-self:start}
