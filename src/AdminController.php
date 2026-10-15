@@ -34,7 +34,9 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
         $vars['user'] = app()->auth->user();
         $vars['counts'] = Repo::counts();
         $dir = dirname(__DIR__) . '/views/admin/';
-        $content = '<link rel="stylesheet" href="' . e(Avv::asset('css/avv-admin.css')) . '">' . Theme::capture($dir . '_nav.php', $vars) . Theme::capture($dir . $view . '.php', $vars);
+        $GLOBALS['avv_shell'] = false;
+        $content = '<link rel="stylesheet" href="' . e(Avv::asset('css/avv-admin.css')) . '">' . Theme::capture($dir . '_nav.php', $vars) . Theme::capture($dir . $view . '.php', $vars)
+            . (!empty($GLOBALS['avv_shell']) ? \Core\AdminUi::close() : '');   // Bereichsliste (Core\AdminUi) schließen
         $html = Theme::capture(ROOT . '/app/Admin/views/layout.php', $vars + ['content' => $content, 'view' => 'avv']);
         return self::secure(new Response($html, $status));
     }
