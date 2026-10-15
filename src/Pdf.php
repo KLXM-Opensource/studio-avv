@@ -95,7 +95,7 @@ final class Pdf
         return '@page{margin:22mm 18mm 20mm 18mm}
 body{font-family:"DejaVu Sans",sans-serif;font-size:9.5pt;line-height:1.45;color:#1c1c1c}
 .pdf-head{position:fixed;top:-14mm;left:0;right:0;font-size:7.5pt;color:#777;text-align:right}
-.avv-doc__title{font-size:15pt;text-align:center;margin:0 0 6pt}
+.avv-doc__title{font-size:15pt;line-height:1.25;text-align:center;margin:0 0 10pt}
 h2{font-size:11.5pt;margin:14pt 0 4pt;page-break-after:avoid}
 h3{font-size:10pt;margin:10pt 0 3pt;page-break-after:avoid}
 p{margin:0 0 6pt}

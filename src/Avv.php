@@ -157,7 +157,7 @@ final class Avv
             }, $html) ?? $html;
         };
         $h = '<div class="avv-doc">';
-        $h .= '<h1 class="avv-doc__title">' . e((string) $version['title']) . '</h1>';
+        $h .= '<h1 class="avv-doc__title">' . self::balancedTitle((string) $version['title']) . '</h1>';
         $h .= $fill(self::clean((string) $version['body']));
         $h .= self::signatures($c, $vals, $pdf);   // Unterschriften unter dem Vertragstext, Anlagen danach
         // Anlage A: Angaben des Kunden je Liste
@@ -182,6 +182,24 @@ final class Avv
             $h .= '<div class="avv-annex' . ($pdf ? ' avv-break' : '') . '"><h2>' . e(lt('Anlage B – Technische und organisatorische Maßnahmen')) . '</h2>' . $fill(self::clean((string) $version['toms'])) . '</div>';
         }
         return $h . '</div>';
+    }
+
+    /**
+     * Lange Titel in zwei etwa gleich lange Zeilen teilen (dompdf kennt kein text-wrap: balance): Umbruch an der Wortgrenze,
+     * die der Mitte am nächsten liegt – „Datenschutzvereinbarung zur Verarbeitung / personenbezogener Daten im Auftrag“.
+     */
+    public static function balancedTitle(string $t): string
+    {
+        $t = trim(preg_replace('~\s+~u', ' ', $t) ?? $t);
+        if (mb_strlen($t) <= 42 || !str_contains($t, ' ')) return e($t);
+        $half = mb_strlen($t) / 2;
+        $best = null;
+        $pos = 0; $bestPos = 0;
+        while (($p = mb_strpos($t, ' ', $pos)) !== false) {
+            if ($best === null || abs($p - $half) < $best) { $best = abs($p - $half); $bestPos = $p; }
+            $pos = $p + 1;
+        }
+        return e(mb_substr($t, 0, $bestPos)) . '<br>' . e(mb_substr($t, $bestPos + 1));
     }
 
     /** Unterschriften: Auftraggeber (getippt oder gezeichnet) und Auftragnehmer (hinterlegt) */

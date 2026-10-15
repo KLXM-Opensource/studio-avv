@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Titel: lange Titel zweizeilig, ausgewogen umbrochen; engerer Zeilenabstand (PDF und Website).
+
 ## 0.1.3
 
 - Netzwerk: Website der AVV wählbar (Einstellungen → „AVV läuft auf der Website“, installationsweit in storage/avv-site.json; Standard Netzwerk-Website).
