@@ -7,7 +7,7 @@ namespace Klxm\Avv;
 
 /**
  * Schrift im PDF (Einstellungen → „Schrift im PDF“): DejaVu Sans (in dompdf enthalten) oder eine freie Schrift von Fontsource
- * (OFL/Apache), z. B. die Hausschrift Lato. dompdf braucht TTF-Dateien: beim Speichern der Einstellung werden Normal, Fett,
+ * (OFL/Apache), z. B. die Hausschrift Lato – aus der Liste oder unter „Andere Schrift …“ mit Namen (Fontsource-Kennung daraus). dompdf braucht TTF-Dateien: beim Speichern der Einstellung werden Normal, Fett,
  * Kursiv und Fett kursiv (Zeichensatz latin) einmal von cdn.jsdelivr.net geladen und unter storage/…/avv/fonts/ abgelegt –
  * danach kein Netzzugriff mehr (das PDF selbst lädt nie etwas nach).
  */
@@ -19,10 +19,26 @@ final class PdfFont
     private const FACES = [['400', 'normal'], ['700', 'normal'], ['400', 'italic'], ['700', 'italic']];
     private const MAX = 2_000_000;
 
+    /** Auswahl „Andere Schrift …“: Name frei eingeben (z. B. „Montserrat“), daraus die Fontsource-Kennung */
+    public const CUSTOM = 'eigene';
+
+    /** Kennung aus einem Schriftnamen: „Source Sans 3“ → source-sans-3 */
+    public static function idFromName(string $name): string
+    {
+        $id = trim((string) preg_replace('~[^a-z0-9]+~', '-', mb_strtolower(trim($name))), '-');
+        return preg_match('~^[a-z0-9][a-z0-9-]{0,63}$~', $id) ? $id : '';
+    }
+
     public static function current(): string
     {
         $id = Avv::setting('pdf_font');
+        if ($id === self::CUSTOM) return self::idFromName(Avv::setting('pdf_font_custom'));
         return isset(self::OPTIONS[$id]) ? $id : '';
+    }
+
+    public static function name(string $id): string
+    {
+        return self::OPTIONS[$id] ?? (Avv::setting('pdf_font_custom') ?: $id);
     }
 
     private static function dir(): string
@@ -46,13 +62,13 @@ final class PdfFont
     /** Fehlende Schnitte laden → Fehlertext oder null */
     public static function ensure(string $id): ?string
     {
-        if ($id === '' || !isset(self::OPTIONS[$id])) return null;
+        if ($id === '') return null;
         foreach (self::FACES as [$w, $st]) {
             $f = self::file($id, $w, $st);
             if (is_file($f)) continue;
             $bin = self::download("https://cdn.jsdelivr.net/fontsource/fonts/$id@latest/latin-$w-$st.ttf");
             if ($bin === null) {
-                if ($w === '400' && $st === 'normal') return __('Die Schrift „{name}“ konnte nicht geladen werden (cdn.jsdelivr.net nicht erreichbar?). Das PDF nutzt bis dahin DejaVu Sans.', ['name' => self::OPTIONS[$id]]);
+                if ($w === '400' && $st === 'normal') return __('Die Schrift „{name}“ wurde nicht gefunden oder konnte nicht geladen werden. Bitte den Namen wie bei Google Fonts schreiben (z. B. „Source Sans 3“). Das PDF nutzt bis dahin DejaVu Sans.', ['name' => self::name($id)]);
                 continue;   // fehlender Schnitt (z. B. ohne Kursiv): dompdf nimmt den nächsten vorhandenen
             }
             file_put_contents($f, $bin, LOCK_EX);

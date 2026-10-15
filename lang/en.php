@@ -175,4 +175,10 @@ return [
     'Ich habe verstanden, dass der Nachweis der Unterzeichnung verloren geht.' => 'I understand that the proof of signature will be lost.',
     'Bitte bestätigen Sie, dass der Nachweis der Unterzeichnung verloren geht.' => 'Please confirm that the proof of signature will be lost.',
     'Vereinbarung mit {name} gelöscht – einschließlich PDF.' => 'Agreement with {name} deleted – including the PDF.',
+    'Schrift im PDF (Hausschrift)' => 'Font in the PDF (corporate font)',
+    'Andere Schrift …' => 'Other font …',
+    'Freie Schriften (Google Fonts / Fontsource) werden beim Speichern einmal geladen und auf dem Server abgelegt.' => 'Free fonts (Google Fonts / Fontsource) are downloaded once when saving and stored on the server.',
+    'Name der Schrift' => 'Font name',
+    'So wie bei Google Fonts, z. B. „Source Sans 3“ oder „Montserrat“. Nur frei lizenzierte Schriften.' => 'As on Google Fonts, e.g. “Source Sans 3” or “Montserrat”. Freely licensed fonts only.',
+    'Die Schrift „{name}“ wurde nicht gefunden oder konnte nicht geladen werden. Bitte den Namen wie bei Google Fonts schreiben (z. B. „Source Sans 3“). Das PDF nutzt bis dahin DejaVu Sans.' => 'The font “{name}” was not found or could not be downloaded. Please write the name as on Google Fonts (e.g. “Source Sans 3”). Until then the PDF uses DejaVu Sans.',
 ];
