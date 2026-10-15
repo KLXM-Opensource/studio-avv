@@ -62,3 +62,4 @@
 .avv-danger__warn{display:flex;gap:8px;margin:0;padding:10px 12px;border-radius:8px;background:var(--adm-err-bg,#fdecea);color:var(--adm-ink);font-size:13px}
 .avv-danger__warn .ico{flex:none;width:16px;height:16px;margin-top:2px;color:var(--adm-err)}
 .avv-danger button{justify-self:start}
+.avv-pdfbtns{display:flex;flex-wrap:wrap;gap:8px}

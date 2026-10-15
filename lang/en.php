@@ -181,4 +181,10 @@ return [
     'Name der Schrift' => 'Font name',
     'So wie bei Google Fonts, z. B. „Source Sans 3“ oder „Montserrat“. Nur frei lizenzierte Schriften.' => 'As on Google Fonts, e.g. “Source Sans 3” or “Montserrat”. Freely licensed fonts only.',
     'Die Schrift „{name}“ wurde nicht gefunden oder konnte nicht geladen werden. Bitte den Namen wie bei Google Fonts schreiben (z. B. „Source Sans 3“). Das PDF nutzt bis dahin DejaVu Sans.' => 'The font “{name}” was not found or could not be downloaded. Please write the name as on Google Fonts (e.g. “Source Sans 3”). Until then the PDF uses DejaVu Sans.',
+    'Website' => 'Website',
+    'AVV läuft auf der Website' => 'DPA runs on website',
+    'Dort zeichnen Kunden (Block „AVV abschließen“, Einladungslinks) und dort liegen Text, Angaben und Verträge. Verwalten kann sie nur die Netzwerk-Administration. Nach einem Wechsel: auf der neuen Website die Erweiterung einschalten und die Angaben dort einrichten – Verträge ziehen nicht mit um.' => 'Clients sign there (block “Conclude DPA”, invitation links) and the text, details and agreements are stored there. Only the network administration can manage it. After switching: enable the extension on the new website and set up the details there – agreements do not move.',
+    'Die AVV läuft jetzt auf „{site}“. Dort die Erweiterung einschalten (Funktionen & Erweiterungen) und unter AVV → Einstellungen die Angaben einrichten.' => 'The DPA now runs on “{site}”. Enable the extension there (Features & extensions) and set up the details under DPA → Settings.',
+    'Herunterladen' => 'Download',
+    'PDF ansehen' => 'View PDF',
 ];

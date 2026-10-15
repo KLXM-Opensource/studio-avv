@@ -8,8 +8,8 @@ namespace Klxm\Avv;
 /**
  * Regeln und Bausteine der AVV (Vereinbarung zur Auftragsverarbeitung, Art. 28 DS-GVO).
  *
- * Wer verwaltet: Die AVV gehört dem Betreiber der Installation. Mit mehreren Websites (Netzwerk) nur auf der Netzwerk-Website
- * und nur für Netzwerk-Konten; bei einer einzelnen Website die Administration (Recht avv.manage).
+ * Wer verwaltet: Die AVV gehört dem Betreiber der Installation. Mit mehreren Websites (Netzwerk) nur auf einer Website – Standard
+ * die Netzwerk-Website, wählbar in den Einstellungen (storage/avv-site.json) – und nur für Netzwerk-Konten; bei einer einzelnen Website die Administration (Recht avv.manage).
  * Texte: Vertragstext (Rich-Text mit Platzhaltern {{…}}), Anlage A (Auswahllisten), Anlage B (TOM), Unterauftragnehmer –
  * als Entwurf in den Einstellungen, veröffentlicht als Fassung (Repo::versions). Auftragnehmer-Angaben in den Einstellungen.
  */
@@ -66,11 +66,31 @@ final class Avv
         return count(\Core\Sites::all()) > 1;
     }
 
-    /** Läuft die AVV auf dieser Website? (Erweiterung aktiv, Funktion an, bei Netzwerk nur die Netzwerk-Website) */
+    /** Installationsweite Wahl der AVV-Website (Netzwerk): storage/avv-site.json – sonst die Netzwerk-Website */
+    private static function siteFile(): string
+    {
+        return ROOT . '/storage/avv-site.json';
+    }
+
+    /** Website, auf der die AVV im Netzwerk läuft (Kunden zeichnen dort, Verträge liegen in ihrer Datenbank) */
+    public static function siteKey(): string
+    {
+        $d = json_decode((string) @file_get_contents(self::siteFile()), true);
+        $k = is_array($d) ? (string) ($d['site'] ?? '') : '';
+        return $k !== '' && isset(\Core\Sites::all()[$k]) ? $k : \Core\Network\Network::siteKey();
+    }
+
+    public static function setSiteKey(string $key): void
+    {
+        if (!isset(\Core\Sites::all()[$key])) throw new \InvalidArgumentException('Unbekannte Website');
+        file_put_contents(self::siteFile(), json_encode(['site' => $key, 'at' => date('c')]), LOCK_EX);
+    }
+
+    /** Läuft die AVV auf dieser Website? (Erweiterung aktiv, Funktion an; im Netzwerk nur auf der gewählten Website) */
     public static function here(): bool
     {
         if (!\Core\Extensions::isActive(self::NAME) || !\Core\Features::on(self::FEATURE)) return false;
-        return !self::multi() || \Core\Network\Network::isNetworkSite();
+        return !self::multi() || site()->key === self::siteKey();
     }
 
     /** Darf die angemeldete Person die AVV verwalten? */

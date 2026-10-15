@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3
+
+- Netzwerk: Website der AVV wählbar (Einstellungen → „AVV läuft auf der Website“, installationsweit in storage/avv-site.json; Standard Netzwerk-Website).
+- „PDF ansehen“ im PDF-Viewer des Kerns (PdfController::file, ältere Kerne: Download), in Liste und Detail.
+- Vereinbarung endgültig löschen (mit Warnung, unterzeichnete nur mit Bestätigung).
+- Schrift im PDF: beliebige freie Schrift per Name.
+
 ## 0.1.2
 
 - Einstellung „Schrift im PDF“: DejaVu Sans oder eine freie Schrift (z. B. Hausschrift Lato) – TTF wird beim Speichern einmal von Fontsource geladen und auf dem Server abgelegt; Fußzeile und getippte Unterschrift in derselben Schrift.

@@ -25,6 +25,9 @@ final class SelfTest
         $draft = app()->settings->get('avv.draft', null);
         $file = null;
         try {
+            // Klassen laden (Signaturen gegen den Kern – z. B. gleichnamige Methoden der Elternklasse)
+            $eq('Verwaltung und Website-Controller laden', [class_exists(AdminController::class), class_exists(SiteController::class)], [true, true]);
+            $eq('AVV-Website im Netzwerk gültig', isset(\Core\Sites::all()[Avv::siteKey()]), true);
             $v = ['id' => 0, 'number' => 99, 'title' => 'Test <AVV>', 'body' => '<p>Zwischen {{firma}} und {{auftragnehmer}} – {{unbekannt}}</p><script>alert(1)</script>',
                 'lists' => json_encode([['label' => 'Daten', 'options' => "Kontakt\nNutzung", 'other' => true]]), 'subprocessors' => '', 'toms' => '<p>TOM</p>'];
             $html = Avv::document($v, ['company' => 'Muster <b>GmbH</b>', 'details' => json_encode(['l0' => ['Kontakt', 'Böse'], 'l0_other' => 'Extra'])]);

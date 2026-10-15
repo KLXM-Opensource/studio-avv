@@ -40,7 +40,7 @@ $date = fn($t) => $t ? date('d.m.Y', (int) strtotime((string) $t)) : '–';
       <td><span class="adm-badge adm-badge--<?= e($st) ?>"><?= e($sl) ?></span><?php if ($old): ?> <span class="adm-badge adm-badge--warn" title="<?= e(__('Ältere Fassung')) ?>"><?= e(__('ältere Fassung')) ?></span><?php endif; ?></td>
       <td><?= (int) ($c['version_number'] ?? 0) ?></td>
       <td><?= e($c['status'] === 'open' ? __('eingeladen {date}', ['date' => $date($c['invited_at'])]) : $date($c['signed_at'])) ?></td>
-      <td class="adm-actions"><?php if ($c['pdf_file'] !== ''): ?><a class="adm-btn adm-btn--small adm-btn--ghost" href="<?= e(url('/admin/avv/' . $c['id'] . '/pdf')) ?>"><?= icon('download-simple') ?> PDF</a><?php endif; ?>
+      <td class="adm-actions"><?php if ($c['pdf_file'] !== ''): ?><a class="adm-btn adm-btn--small adm-btn--ghost" href="<?= e(url('/admin/avv/' . $c['id'] . '/ansehen')) ?>" target="_blank" rel="noopener" title="<?= e(__('PDF ansehen')) ?>"><?= icon('file-pdf') ?> PDF</a><?php endif; ?>
         <a class="adm-btn adm-btn--small adm-btn--ghost" href="<?= e(url('/admin/avv/' . $c['id'])) ?>"><?= e(__('Öffnen')) ?></a></td></tr>
   <?php endforeach; ?>
   </tbody></table></div>

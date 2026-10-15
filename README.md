@@ -16,7 +16,7 @@ Mitgeliefert ist nur ein **Platzhaltertext** (Gliederung mit Platzhaltern) – k
 
 ## Wer verwaltet
 
-- **Mehrere Websites in einer Installation (Netzwerk)**: nur auf der Netzwerk-Website, nur für Netzwerk-Konten.
+- **Mehrere Websites in einer Installation (Netzwerk)**: auf einer Website – Standard die Netzwerk-Website, wählbar unter AVV → Einstellungen – und nur für Netzwerk-Konten.
 - **Eine Website**: die Administration mit dem Recht „AVV verwalten“ (`avv.manage`).
 
 ## Installation

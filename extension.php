@@ -29,7 +29,7 @@ use Klxm\Avv\SiteController;
 return [
     'name' => 'avv',
     'label' => 'AVV – Auftragsverarbeitung zeichnen lassen',
-    'version' => '0.1.2',
+    'version' => '0.1.3',
     'requires' => '>=1.0.0',
     'description' => 'Vereinbarung zur Auftragsverarbeitung (Art. 28 DS-GVO) Schritt für Schritt ausfüllen, elektronisch unterzeichnen und als PDF ablegen; Kunden einladen, neue Fassungen erneut zeichnen lassen.',
     'author' => 'KLXM Crossmedia GmbH and contributors',
@@ -92,6 +92,7 @@ return [
             $r->post('/admin/avv/einstellungen', [$c, 'saveSettings'], $p);
             $r->get('/admin/avv/{id}', [$c, 'show'], $p);
             $r->get('/admin/avv/{id}/pdf', [$c, 'pdf'], $p);
+            $r->get('/admin/avv/{id}/ansehen', [$c, 'viewPdf'], $p);
             $r->post('/admin/avv/{id}/erneut', [$c, 'resend'], $p);
             $r->post('/admin/avv/{id}/beenden', [$c, 'revoke'], $p);
             $r->post('/admin/avv/{id}/loeschen', [$c, 'delete'], $p);

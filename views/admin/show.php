@@ -34,7 +34,8 @@ $outdated = $c['status'] === 'signed' && $current && (int) $c['version_id'] !== 
 
   <aside class="adm-card avv-actions">
     <h2><?= e(__('Aktionen')) ?></h2>
-    <?php if ($c['pdf_file'] !== ''): ?><p><a class="adm-btn adm-btn--primary" href="<?= e(url('/admin/avv/' . $c['id'] . '/pdf')) ?>"><?= icon('download-simple') ?> <?= e(__('PDF herunterladen')) ?></a></p><?php endif; ?>
+    <?php if ($c['pdf_file'] !== ''): ?><p class="avv-pdfbtns"><a class="adm-btn adm-btn--primary" href="<?= e(url('/admin/avv/' . $c['id'] . '/ansehen')) ?>" target="_blank" rel="noopener"><?= icon('file-pdf') ?> <?= e(__('PDF ansehen')) ?></a>
+      <a class="adm-btn" href="<?= e(url('/admin/avv/' . $c['id'] . '/pdf')) ?>"><?= icon('download-simple') ?> <?= e(__('Herunterladen')) ?></a></p><?php endif; ?>
     <?php if ($c['status'] === 'open'): ?>
       <form method="post" action="<?= e(url('/admin/avv/' . $c['id'] . '/erneut')) ?>"><?= csrf_field() ?><button class="adm-btn"><?= icon('paper-plane-tilt') ?> <?= e(__('Einladung erneut senden')) ?></button></form>
       <p class="adm-muted"><?= e(__('Gültig bis {date}. Erneut senden erzeugt einen neuen Link.', ['date' => $when($c['sign_expires'])])) ?></p>

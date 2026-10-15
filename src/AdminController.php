@@ -107,6 +107,16 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
         return Pdf::response(Repo::find((int) $id) ?? throw new HttpException(404));
     }
 
+    /** PDF im Viewer des Kerns (PdfController::file) – ältere Kerne: Download */
+    public function viewPdf(Request $r, string $id): Response
+    {
+        $this->guard($r);
+        $c = Repo::find((int) $id) ?? throw new HttpException(404);
+        $path = Pdf::path($c) ?? throw new HttpException(404);
+        if (!method_exists(\Core\Http\Controllers\PdfController::class, 'file')) return Pdf::response($c);
+        return \Core\Http\Controllers\PdfController::file(url('/admin/avv/' . $c['id'] . '/pdf'), Pdf::downloadName($c), (int) filesize($path), null, url('/admin/avv/' . $c['id']));
+    }
+
     /** Offen: Einladung erneut senden · Gezeichnet: neue Zeichnung (aktuelle Fassung) anfordern – Angaben vorausgefüllt */
     public function resend(Request $r, string $id): Response
     {
@@ -245,7 +255,15 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
     public static function settingsFields(): array
     {
         [$ds, $dt] = Mail::inviteDefault();
-        return [
+        $site = [];
+        if (Avv::multi()) {
+            $opts = [];
+            foreach (\Core\Sites::all() as $k => $cfg) $opts[$k] = (new \Core\Site($k, $cfg))->label() . ' (' . $k . ')';
+            $site = [['type' => 'heading', 'label' => __('Website')],
+                ['name' => '_site', 'label' => __('AVV läuft auf der Website'), 'type' => 'select', 'options' => $opts,
+                    'help' => __('Dort zeichnen Kunden (Block „AVV abschließen“, Einladungslinks) und dort liegen Text, Angaben und Verträge. Verwalten kann sie nur die Netzwerk-Administration. Nach einem Wechsel: auf der neuen Website die Erweiterung einschalten und die Angaben dort einrichten – Verträge ziehen nicht mit um.')]];
+        }
+        return [...$site,
             ['type' => 'heading', 'label' => __('Auftragnehmer (Ihr Unternehmen)')],
             ['name' => 'provider_name', 'label' => __('Name'), 'type' => 'text', 'max' => 191, 'help' => __('Leer: Name der Website.')],
             ['name' => 'provider_street', 'label' => __('Straße und Hausnummer'), 'type' => 'text', 'max' => 191, 'width' => 'half', 'required' => true],
@@ -273,6 +291,7 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
         $this->guard($r);
         $vals = [];
         foreach (self::settingsFields() as $f) if (isset($f['name'])) $vals[$f['name']] = app()->settings->get('avv.' . $f['name'], '');
+        $vals['_site'] = Avv::siteKey();
         return $this->page('settings', ['values' => $vals]);
     }
 
@@ -281,11 +300,21 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
         $this->guard($r);
         [$v, $errors] = Fields::sanitize(self::settingsFields(), (array) ($r->post['f'] ?? []));
         if ($errors) return $this->page('settings', ['values' => $v, 'errors' => $errors], 422);
+        // Website der AVV (Netzwerk): installationsweit, nicht in den Einstellungen dieser Website
+        $newSite = (string) ($v['_site'] ?? '');
+        unset($v['_site']);
         foreach ($v as $k => $val) {
             $val = is_scalar($val) || $val === null ? trim((string) $val) : json_encode($val);
             $val === '' ? app()->settings->delete('avv.' . $k) : app()->settings->set('avv.' . $k, $val);
         }
         if ($err = PdfFont::ensure(PdfFont::current())) return $this->to('/admin/avv/einstellungen', 'error', $err);
+        if (Avv::multi() && $newSite !== '' && $newSite !== Avv::siteKey()) {
+            Avv::setSiteKey($newSite);
+            try { \Core\Network\Network::log('avv.site', $newSite, (string) (app()->auth->user()['email'] ?? ''), 'AVV-Website gewechselt'); } catch (\Throwable) {}
+            $label = (new \Core\Site($newSite, \Core\Sites::all()[$newSite]))->label();
+            app()->session->flash('success', __('Die AVV läuft jetzt auf „{site}“. Dort die Erweiterung einschalten (Funktionen & Erweiterungen) und unter AVV → Einstellungen die Angaben einrichten.', ['site' => $label]));
+            return Response::redirect(url('/admin'), 303);
+        }
         return $this->to('/admin/avv/einstellungen', 'success', __('Gespeichert.'));
     }
 }
