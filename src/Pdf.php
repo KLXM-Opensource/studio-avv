@@ -39,7 +39,7 @@ final class Pdf
         $o->set('fontCache', self::dir());
         $o->setChroot([self::dir()]);
         $pdf = new Dompdf($o);
-        $html = '<!doctype html><html lang="' . e(\Core\Lang::current()) . '"><head><meta charset="utf-8"><style>' . self::css() . '</style></head><body>'
+        $html = '<!doctype html><html lang="' . e(\Core\Lang::current()) . '"><head><meta charset="utf-8"><style>' . self::css() . PdfFont::css() . '</style></head><body>'
             . '<header class="pdf-head">' . e(Avv::provider()['name']) . '</header>'
             . Avv::document($version, $c, false, true) . '</body></html>';
         $pdf->loadHtml($html, 'UTF-8');
@@ -47,7 +47,7 @@ final class Pdf
         $pdf->render();
         // Fußzeile: Seite x von y und Prüfvermerk
         $canvas = $pdf->getCanvas();
-        $font = $pdf->getFontMetrics()->getFont('DejaVu Sans');
+        $font = (PdfFont::css() !== '' ? $pdf->getFontMetrics()->getFont('AvvPdf') : null) ?: $pdf->getFontMetrics()->getFont('DejaVu Sans');   // Fußzeile in der Schrift des PDFs
         $label = lt('Seite {n} von {total}', ['n' => '{PAGE_NUM}', 'total' => '{PAGE_COUNT}']);
         $canvas->page_text(510, 812, $label, $font, 7.5, [0.35, 0.35, 0.35]);
         if ($stamp !== '') $canvas->page_text(42, 812, $stamp, $font, 7.5, [0.35, 0.35, 0.35]);

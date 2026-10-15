@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Einstellung „Schrift im PDF“: DejaVu Sans oder eine freie Schrift (z. B. Hausschrift Lato) – TTF wird beim Speichern einmal von Fontsource geladen und auf dem Server abgelegt; Fußzeile und getippte Unterschrift in derselben Schrift.
+
 ## 0.1.1
 
 - Vertragstext: Liste aller Platzhalter rechts neben dem Editor (Bedeutung, Beispiel, Kopieren); Hinweis, was automatisch angehängt wird.

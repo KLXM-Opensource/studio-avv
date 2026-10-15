@@ -9,6 +9,7 @@ Vereinbarung zur Auftragsverarbeitung (Art. 28 DS-GVO) Schritt für Schritt ausf
 - **Unterschrift**: mit Namen (elektronisch) oder von Hand gezeichnet (Maus, Finger, Stift). Die Gegenzeichnung des Auftragnehmers (Name, optional Unterschriftsbild) ist hinterlegt und steht sofort im PDF.
 - **PDF** (dompdf): Kunde und Betreiber erhalten es sofort per E-Mail (Anhang + Link); jede Seite trägt Zeitpunkt der Zeichnung, Fassung und Vertragsnummer, die SHA-256-Prüfsumme steht am Vertrag.
 - **Fassungen**: Text als Entwurf bearbeiten, PDF-Vorschau, als neue Fassung veröffentlichen. Kunden mit älterer Fassung lassen sich einzeln oder alle auf einmal zur erneuten Zeichnung einladen – ihre Angaben sind vorausgefüllt, die alte Zeichnung gilt danach als ersetzt.
+- **Schrift im PDF**: DejaVu Sans oder eine freie Schrift von Fontsource (z. B. Lato) – einmal beim Speichern geladen.
 - **Texte je Website**: Vertragstext mit Platzhaltern, Anlage A als Auswahllisten, Unterauftragnehmer, Anlage B (TOM), Einladungstext.
 
 Mitgeliefert ist nur ein **Platzhaltertext** (Gliederung mit Platzhaltern) – kein fertiger Vertrag. Ersetzen Sie ihn durch Ihren eigenen, rechtlich geprüften Text.

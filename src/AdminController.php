@@ -236,6 +236,9 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
             ['name' => 'provider_signer', 'label' => __('Name der unterzeichnenden Person'), 'type' => 'text', 'max' => 191, 'width' => 'half', 'required' => true],
             ['name' => 'provider_role', 'label' => __('Funktion'), 'type' => 'text', 'max' => 120, 'width' => 'half'],
             ['name' => 'provider_signature', 'label' => __('Unterschrift als Bild (optional)'), 'type' => 'media', 'help' => __('PNG mit transparentem Hintergrund. Ohne Bild steht der Name. Erscheint automatisch in jeder unterzeichneten Vereinbarung.')],
+            ['type' => 'heading', 'label' => __('PDF')],
+            ['name' => 'pdf_font', 'label' => __('Schrift im PDF'), 'type' => 'select', 'options' => array_map('strval', PdfFont::OPTIONS) + ['' => __('DejaVu Sans (Standard)')],
+                'help' => __('Z. B. Ihre Hausschrift. Freie Schriften werden beim Speichern einmal geladen und auf dem Server abgelegt.')],
             ['type' => 'heading', 'label' => __('E-Mails')],
             ['name' => 'notify', 'label' => __('Hinweis bei neuer Zeichnung an'), 'type' => 'text', 'max' => 500, 'help' => __('Eine oder mehrere Adressen, mit Komma getrennt – erhält das PDF.')],
             ['name' => 'invite_subject', 'label' => __('Einladung: Betreff'), 'type' => 'text', 'max' => 191, 'placeholder' => $ds],
@@ -261,6 +264,7 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
             $val = is_scalar($val) || $val === null ? trim((string) $val) : json_encode($val);
             $val === '' ? app()->settings->delete('avv.' . $k) : app()->settings->set('avv.' . $k, $val);
         }
+        if ($err = PdfFont::ensure(PdfFont::current())) return $this->to('/admin/avv/einstellungen', 'error', $err);
         return $this->to('/admin/avv/einstellungen', 'success', __('Gespeichert.'));
     }
 }

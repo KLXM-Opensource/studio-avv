@@ -163,4 +163,9 @@ return [
     'Platzhalter wie {{firma}} stehen in der Liste rechts. Unterschriften folgen automatisch unter dem Text.' => 'Placeholders such as {{firma}} are listed on the right. Signatures are added automatically below the text.',
     'z. B. {example}' => 'e.g. {example}',
     '{{{name}}} kopieren' => 'Copy {{{name}}}',
+    'DejaVu Sans (Standard)' => 'DejaVu Sans (default)',
+    'PDF' => 'PDF',
+    'Schrift im PDF' => 'Font in the PDF',
+    'Z. B. Ihre Hausschrift. Freie Schriften werden beim Speichern einmal geladen und auf dem Server abgelegt.' => 'E.g. your corporate font. Free fonts are downloaded once when saving and stored on the server.',
+    'Die Schrift „{name}“ konnte nicht geladen werden (cdn.jsdelivr.net nicht erreichbar?). Das PDF nutzt bis dahin DejaVu Sans.' => 'The font “{name}” could not be downloaded (cdn.jsdelivr.net unreachable?). Until then the PDF uses DejaVu Sans.',
 ];
