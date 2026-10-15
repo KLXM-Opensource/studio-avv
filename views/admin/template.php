@@ -9,7 +9,23 @@ use Klxm\Avv\AdminController;
 <?php if ($isDraft): ?><p class="adm-flash adm-flash--info" role="note"><?= e(__('Sie bearbeiten einen Entwurf. Kunden sehen weiterhin die veröffentlichte Fassung, bis Sie veröffentlichen.')) ?></p><?php endif; ?>
 <form method="post" action="<?= e(url('/admin/avv/vorlage')) ?>" novalidate class="avv-tpl">
   <?= csrf_field() ?>
+  <div class="avv-tpl-grid">
   <section class="adm-card"><div class="adm-fields"><?= Fields::renderForm(AdminController::templateFields(), $values, $errors, 'f') ?></div></section>
+  <?php // Platzhalter neben dem Editor: Bedeutung, Beispiel, Kopieren (admin.js [data-copy]) ?>
+  <aside class="adm-card avv-ph-list" aria-labelledby="avv-ph-h">
+    <h2 id="avv-ph-h"><?= e(__('Platzhalter')) ?></h2>
+    <p class="adm-muted"><?= e(__('In den Text kopieren – beim Ausfüllen werden sie durch die Angaben ersetzt.')) ?></p>
+    <dl>
+      <?php foreach (\Klxm\Avv\Avv::placeholderInfo() as $k => [$label, $example]): ?>
+      <div class="avv-ph-row">
+        <dt><code id="avv-ph-<?= e($k) ?>">{{<?= e($k) ?>}}</code><button type="button" class="adm-btn adm-btn--small adm-btn--ghost" data-copy="#avv-ph-<?= e($k) ?>" aria-label="<?= e(__('{{{name}}} kopieren', ['name' => $k])) ?>"><?= e(__('Kopieren')) ?></button></dt>
+        <dd><?= e($label) ?><br><small class="adm-muted"><?= e(__('z. B. {example}', ['example' => $example])) ?></small></dd>
+      </div>
+      <?php endforeach; ?>
+    </dl>
+    <p class="adm-muted avv-ph-note"><?= e(__('Automatisch, ohne Platzhalter: Unterschriften beider Seiten mit „Ort, Datum“ unter dem Vertragstext, danach Anlage A (Auswahl des Kunden), Unterauftragnehmer und Anlage B.')) ?></p>
+  </aside>
+  </div>
   <div class="adm-savebar avv-savebar">
     <button class="adm-btn" name="do" value="save"><?= e(__('Entwurf speichern')) ?></button>
     <a class="adm-btn adm-btn--ghost" href="<?= e(url('/admin/avv/vorlage/vorschau.pdf')) ?>" target="_blank" rel="noopener"><?= icon('file-pdf') ?> <?= e(__('PDF-Vorschau des Entwurfs')) ?></a>

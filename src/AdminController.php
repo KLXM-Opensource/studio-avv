@@ -158,10 +158,9 @@ final class AdminController extends \Core\Http\Controllers\Admin\AdminController
 
     public static function templateFields(): array
     {
-        $ph = implode(' ', array_map(fn($k) => '{{' . $k . '}}', array_keys(Avv::placeholders())));
         return [
             ['name' => 'title', 'label' => __('Titel'), 'type' => 'text', 'required' => true, 'max' => 191],
-            ['name' => 'body', 'label' => __('Vertragstext'), 'type' => 'richtext', 'help' => __('Platzhalter: {list} – werden beim Ausfüllen ersetzt. Unterschriften folgen automatisch am Ende.', ['list' => $ph])],
+            ['name' => 'body', 'label' => __('Vertragstext'), 'type' => 'richtext', 'help' => __('Platzhalter wie {{firma}} stehen in der Liste rechts. Unterschriften folgen automatisch unter dem Text.')],
             ['name' => 'lists', 'label' => __('Anlage A – Auswahllisten für den Kunden'), 'type' => 'repeater', 'help' => __('Je Liste eine Überschrift und die Möglichkeiten (eine je Zeile). Der Kunde kreuzt an, was zutrifft.'),
                 'fields' => [
                     ['name' => 'label', 'label' => __('Überschrift'), 'type' => 'text', 'max' => 120],

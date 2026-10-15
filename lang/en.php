@@ -156,4 +156,11 @@ return [
     'ältere Fassung' => 'older version',
     'ältere Fassung ({v}) – aktuell ist {c}' => 'older version ({v}) – current is {c}',
     'über die Website (selbst ausgefüllt)' => 'via the website (self-completed)',
+    'Automatisch, ohne Platzhalter: Unterschriften beider Seiten mit „Ort, Datum“ unter dem Vertragstext, danach Anlage A (Auswahl des Kunden), Unterauftragnehmer und Anlage B.' => 'Added automatically, no placeholder needed: both signatures with “place, date” below the agreement text, followed by Annex A (the client’s selection), subprocessors and Annex B.',
+    'In den Text kopieren – beim Ausfüllen werden sie durch die Angaben ersetzt.' => 'Copy them into the text – they are replaced with the details when the form is filled in.',
+    'Kopieren' => 'Copy',
+    'Platzhalter' => 'Placeholders',
+    'Platzhalter wie {{firma}} stehen in der Liste rechts. Unterschriften folgen automatisch unter dem Text.' => 'Placeholders such as {{firma}} are listed on the right. Signatures are added automatically below the text.',
+    'z. B. {example}' => 'e.g. {example}',
+    '{{{name}}} kopieren' => 'Copy {{{name}}}',
 ];

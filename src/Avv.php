@@ -37,6 +37,18 @@ final class Avv
         ];
     }
 
+    /** Platzhalter mit Beispiel (Liste neben dem Editor): key => [Bedeutung, Beispiel] – Beispiele aus den eigenen Angaben, wo vorhanden */
+    public static function placeholderInfo(): array
+    {
+        $p = self::provider();
+        $ex = ['firma' => 'Muster GmbH', 'anschrift' => 'Musterstraße 1', 'plz_ort' => '12345 Musterstadt', 'unterzeichner' => 'Erika Musterfrau',
+            'funktion' => 'Geschäftsführung', 'datum' => date('d.m.Y'), 'auftragnehmer' => $p['name'],
+            'auftragnehmer_anschrift' => trim($p['street'] . ', ' . $p['zip_city'], ', ') ?: 'Agenturweg 2, 12345 Musterstadt', 'ort' => $p['place'] ?: ($p['zip_city'] ?: 'Musterstadt')];
+        $out = [];
+        foreach (self::placeholders() as $k => $label) $out[$k] = [$label, $ex[$k] ?? ''];
+        return $out;
+    }
+
     public static function asset(string $path): string
     {
         $x = \Core\Extensions::active()[self::NAME] ?? null;
