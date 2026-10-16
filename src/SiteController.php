@@ -71,6 +71,16 @@ final class SiteController
         $token = (string) ($in['invite'] ?? '');
         $c = $token !== '' ? Repo::byToken($token, 'sign') : null;
         if ($token !== '' && !$c) return $this->message(lt('Link nicht mehr gültig'), lt('Dieser Link ist abgelaufen oder die Vereinbarung wurde bereits unterzeichnet.'), 410);
+        // Ohne Einladung nur, wenn der Block „AVV abschließen“ auf einer veröffentlichten Seite steht – und eng begrenzt
+        // (sonst ließe sich die Website als Absender für PDFs an beliebige Adressen missbrauchen)
+        if (!$c) {
+            if (!self::selfSignOpen()) throw new HttpException(404);
+            $limiter = new \Core\RateLimiter(app()->db);
+            $ipKey = 'avv-self:' . substr(hash_hmac('sha256', $r->ip(), app()->key()), 0, 32);
+            if ($limiter->tooMany($ipKey, 3, 86400) || $limiter->tooMany('avv-self', 20, 86400)) {
+                return $this->message(lt('Bitte erneut versuchen'), lt('Gerade sind zu viele Anfragen eingegangen. Bitte versuchen Sie es später erneut.'), 429);
+            }
+        }
         $spam = SpamGuard::check(self::FORM, $in, $r->ip());
         if (!$spam['ok']) {
             if (!empty($spam['silent'])) return $this->message(lt('Vielen Dank'), lt('Ihre Angaben sind eingegangen.'));
@@ -86,7 +96,12 @@ final class SiteController
             'sign_ip' => hash_hmac('sha256', $r->ip(), app()->key()), 'sign_ua' => mb_substr((string) ($r->server['HTTP_USER_AGENT'] ?? ''), 0, 255),
             'sign_token' => '', 'sign_expires' => null];
         if ($c) { Repo::update((int) $c['id'], $row); $id = (int) $c['id']; }
-        else $id = Repo::create($row + ['source' => 'self']);
+        else {
+            $id = Repo::create($row + ['source' => 'self']);
+            $limiter = new \Core\RateLimiter(app()->db);
+            $limiter->hit('avv-self:' . substr(hash_hmac('sha256', $r->ip(), app()->key()), 0, 32));
+            $limiter->hit('avv-self');
+        }
         $c = Repo::find($id);
         try {
             [$file, $hash] = Pdf::store($c);
@@ -145,5 +160,11 @@ final class SiteController
             else $d['sig_png'] = $png;
         }
         return [$d, $e];
+    }
+
+    /** Selbst abschließen (ohne Einladung) ist offen, wenn eine veröffentlichte Seite den Block „avv“ enthält */
+    public static function selfSignOpen(): bool
+    {
+        return (bool) app()->db->fetchValue("SELECT 1 FROM pages WHERE status = 'published' AND content_published LIKE ? LIMIT 1", ['%"type":"avv"%']);
     }
 }

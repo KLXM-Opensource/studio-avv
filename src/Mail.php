@@ -51,12 +51,13 @@ final class Mail
         $p = Avv::provider();
         $file = Pdf::path($c);
         $attach = $file && filesize($file) < 4_000_000 ? [['name' => Pdf::downloadName($c), 'data' => (string) file_get_contents($file), 'type' => 'application/pdf']] : [];
-        $link = absolute_url(Avv::BASE . '/pdf/' . $dlToken);
+        $base = trusted_site_url();
+        $link = $base !== null ? rtrim($base, '/') . url(Avv::BASE . '/pdf/' . $dlToken) : '';
         if (filter_var((string) $c['email'], FILTER_VALIDATE_EMAIL)) {
             Mailer::send(lt('Ihre unterzeichnete Vereinbarung zur Auftragsverarbeitung – {site}', ['site' => $p['name']]),
                 lt('Guten Tag {name},', ['name' => $c['signer'] ?: $c['contact']]) . "\n\n"
                 . lt('vielen Dank – die Vereinbarung zur Auftragsverarbeitung ist unterzeichnet. Sie finden sie als PDF im Anhang.') . "\n\n"
-                . lt('Herunterladen ({n} Tage gültig): {link}', ['n' => Avv::DOWNLOAD_DAYS, 'link' => $link]) . "\n\n"
+                . ($link !== '' ? lt('Herunterladen ({n} Tage gültig): {link}', ['n' => Avv::DOWNLOAD_DAYS, 'link' => $link]) . "\n\n" : '')
                 . lt('Prüfsumme (SHA-256): {hash}', ['hash' => $c['pdf_hash']]) . "\n\n" . $p['name'],
                 [(string) $c['email']], ['purpose' => self::PURPOSE, 'attach' => $attach]);
         }

@@ -19,6 +19,7 @@ return [
     'Bitte die Firma angeben.' => 'Please enter the company.',
     'Bitte eine gültige E-Mail-Adresse angeben – dorthin geht Ihr PDF.' => 'Please enter a valid email address – your PDF will be sent there.',
     'Bitte erneut versuchen' => 'Please try again',
+    'Gerade sind zu viele Anfragen eingegangen. Bitte versuchen Sie es später erneut.' => 'Too many requests right now. Please try again later.',
     'Bitte leer lassen' => 'Please leave empty',
     'Bitte prüfen Sie die markierten Angaben.' => 'Please check the highlighted details.',
     'Bitte unterschreiben Sie im Feld – oder wählen Sie „Mit Namen unterzeichnen“.' => 'Please sign in the field – or choose "Sign with name".',

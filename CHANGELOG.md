@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.5
+
+- Sicherheit: Unterzeichnen ohne Einladung nur, wenn der Block „AVV abschließen“ auf einer veröffentlichten Seite steht; eigene Begrenzung (3 je Anschluss, 20 je Tag) statt der gemeinsamen Formular-Grenze – die Website lässt sich nicht als Absender für PDFs an fremde Adressen missbrauchen.
+- Download-Link in der E-Mail nur mit der festen Adresse der Website (`trusted_site_url()`), nie aus dem Host-Header der Anfrage.
+
 ## 0.1.4
 
 - Titel: lange Titel zweizeilig, ausgewogen umbrochen; engerer Zeilenabstand (PDF und Website).

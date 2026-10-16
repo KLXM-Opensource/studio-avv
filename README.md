@@ -4,7 +4,7 @@ Vereinbarung zur Auftragsverarbeitung (Art. 28 DS-GVO) Schritt für Schritt ausf
 
 ## Was die Erweiterung kann
 
-- **Kunden füllen selbst aus**: Block „AVV abschließen“ auf einer Seite der Website – vier Schritte (Unternehmen · Details zum Auftrag · Vereinbarung lesen · Unterzeichnen). Der Vertragstext füllt sich live mit den Angaben.
+- **Kunden füllen selbst aus**: Block „AVV abschließen“ auf einer Seite der Website – vier Schritte (Unternehmen · Details zum Auftrag · Vereinbarung lesen · Unterzeichnen). Der Vertragstext füllt sich live mit den Angaben. Ohne Einladung nimmt die Website Unterzeichnungen nur an, solange der Block auf einer veröffentlichten Seite steht – höchstens 3 je Anschluss und 20 je Tag.
 - **Einladungen**: In der Verwaltung Kunden per E-Mail einladen – persönlicher Link, 30 Tage gültig.
 - **Unterschrift**: mit Namen (elektronisch) oder von Hand gezeichnet (Maus, Finger, Stift). Die Gegenzeichnung des Auftragnehmers (Name, optional Unterschriftsbild) ist hinterlegt und steht sofort im PDF.
 - **PDF** (dompdf): Kunde und Betreiber erhalten es sofort per E-Mail (Anhang + Link); jede Seite trägt Zeitpunkt der Zeichnung, Fassung und Vertragsnummer, die SHA-256-Prüfsumme steht am Vertrag.
